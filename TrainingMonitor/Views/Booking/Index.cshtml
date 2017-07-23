@@ -1,0 +1,78 @@
+﻿@model IEnumerable<TrainingMonitor.Models.BookingModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/plugins/responsive-table/css/rwd-table.min.css" rel="stylesheet" type="text/css" media="screen">
+
+@Html.Partial("_Breadcrumb", new Dictionary<string, string> { { "Coach", @"\" }, { "My Bookings", "" } })
+
+
+<div class="row">
+    <div class="col-sm-12 col-xs-24">
+        <div class="card m-b-20 card-block">
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box">
+                        
+                        <div class="table-rep-plugin">
+                            <div class="table-responsive" data-pattern="priority-columns"
+                                 data-add-focus-btn="false" data-add-display-all-btn="false"
+                                 sticky-table-header="true">
+                                <table id="myBookingsTable" class="table">
+                                    <thead class="thead-default">
+                                    <tr>
+                                        <th>DateTime</th>
+                                        <th>Court</th>
+                                        <th>Duration (minutes)</th>
+                                        <th>Trainees</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach (var b in Model)
+                                    {
+                                        <tr id="@b.Id">
+                                            <td>@b.DateTime.ToString("dd MMM yyyy HH:mm")</td>
+                                            <td>@b.Court.ToString()</td>
+                                            <td>@b.Duration.ToString()</td>
+                                            <td>@b.TraineeNames</td>
+                                        </tr>
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+    
+
+@section scripts
+{
+    <script src="~/Content/plugins/responsive-table/js/rwd-table.min.js" type="text/javascript"></script>
+    <script src="~/Content/plugins/datatables/responsive.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myBookingsTable tbody').on('click', 'tr', function (e) {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    $('#myBookingsTable tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+
+            });
+        });
+    </script>
+    
+}

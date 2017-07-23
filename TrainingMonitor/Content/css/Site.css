@@ -1,0 +1,99 @@
+﻿
+.bg-accpunt-pages {
+    background: #021732;
+    background: -webkit-linear-gradient(to left, #021732, #021732);
+    background: linear-gradient(to left, #021732, #021732);
+}
+
+.bg {
+    /* The image used */
+    background: url('/Content/images/background.jpg') no-repeat center;
+    /* Full height */
+    /*height: 100%;*/
+    background-size: cover;
+}
+
+#wrapper {
+    padding-top: 62px;
+}
+
+#topMenu {
+    text-align: left !important
+}
+
+#topnav #topMenu, .navbar-custom {
+    background-color: #4682b4 !important;
+}
+
+@media (max-width: 991px) {
+    #topnav {
+        background-color: #4682b4;
+    }
+
+        /*#topnav .navbar-toggle span {
+            background-color: white !important;
+        }*/
+
+    #bigLogoItem {
+        display: none !important;
+    }
+}
+
+#topnav .navigation-menu > li > a {
+    color: white
+}
+
+#mainContainer {
+    background: #4682b4 !important;
+}
+
+.container {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    padding-left: 0 !important;
+    width: 100%;
+}
+
+.logoBig {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #dddddd;
+}
+
+#signInButton {
+    background-color: #021732 !important;
+    border: 1px solid #021732 !important;
+}
+
+.loginPartialCotainer a {
+    color: darkblue;
+}
+
+/*#logoutForm >li a {
+    color: white !important;
+}*/
+
+.bottom-buffer {
+    margin-bottom: 20px;
+}
+
+.form-control-sm {
+    height: 2rem !important;
+}
+
+.form-group {
+    margin-bottom: 10px !important;
+}
+.thead-inverse th {
+    background-color: #343c49;
+}
+#myTradesTable tr {
+    cursor: pointer;
+}
+#myBookingsTable .selected{
+    background-color: #008080;
+    color: white;
+}

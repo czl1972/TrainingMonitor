@@ -1,0 +1,22 @@
+﻿<div class="row m-l-10 m-r-10">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <div class="btn-group">
+                <ol class="breadcrumb hide-phone p-0 m-0">
+                    @foreach (KeyValuePair<string, string> item in Model)
+                    {
+                        if (!string.IsNullOrEmpty(item.Value))
+                        {
+                            <li class="breadcrumb-item"><a href="@Url.Action(item.Value)">@item.Key</a></li>
+                        }
+                        else
+                        {
+                            <li class="breadcrumb-item active">@item.Key</li>
+                        }
+                    }
+                </ol>
+            </div>
+            @Html.Partial("_LoginPartial")
+        </div>
+    </div>
+</div>
