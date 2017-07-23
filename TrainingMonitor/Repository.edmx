@@ -1,0 +1,392 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Repository.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bookings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Datetime" Type="datetime" Nullable="false" />
+          <Property Name="Court" Type="tinyint" />
+          <Property Name="Duration" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TraineeBooking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TraineeId" Type="int" Nullable="false" />
+          <Property Name="BookingId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Trainees">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Firstname" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Surname" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateOfBirth" Type="datetime" Nullable="false" />
+          <Property Name="BeNumber" Type="nchar" MaxLength="25" />
+          <Property Name="Avatar" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserTrainee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="TraineeId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Bookings_Bookings">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Bookings">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraineeBooking_Bookings">
+          <End Role="Bookings" Type="Self.Bookings" Multiplicity="1" />
+          <End Role="TraineeBooking" Type="Self.TraineeBooking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bookings">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraineeBooking">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraineeBooking_Trainees">
+          <End Role="Trainees" Type="Self.Trainees" Multiplicity="1" />
+          <End Role="TraineeBooking" Type="Self.TraineeBooking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraineeBooking">
+              <PropertyRef Name="TraineeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTrainee_Trainees">
+          <End Role="Trainees" Type="Self.Trainees" Multiplicity="1" />
+          <End Role="UserTrainee" Type="Self.UserTrainee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTrainee">
+              <PropertyRef Name="TraineeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTrainee_UserTrainee">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="UserTrainee" Type="Self.UserTrainee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTrainee">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RepositoryStoreContainer">
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bookings" EntityType="Self.Bookings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TraineeBooking" EntityType="Self.TraineeBooking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trainees" EntityType="Self.Trainees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserTrainee" EntityType="Self.UserTrainee" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Bookings_Bookings" Association="Self.FK_Bookings_Bookings">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Bookings" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraineeBooking_Bookings" Association="Self.FK_TraineeBooking_Bookings">
+            <End Role="Bookings" EntitySet="Bookings" />
+            <End Role="TraineeBooking" EntitySet="TraineeBooking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraineeBooking_Trainees" Association="Self.FK_TraineeBooking_Trainees">
+            <End Role="Trainees" EntitySet="Trainees" />
+            <End Role="TraineeBooking" EntitySet="TraineeBooking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTrainee_Trainees" Association="Self.FK_UserTrainee_Trainees">
+            <End Role="Trainees" EntitySet="Trainees" />
+            <End Role="UserTrainee" EntitySet="UserTrainee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTrainee_UserTrainee" Association="Self.FK_UserTrainee_UserTrainee">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="UserTrainee" EntitySet="UserTrainee" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Repository" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Trainee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Firstname" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BeNumber" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Avatar" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="UserTrainees" Relationship="Repository.FK_UserTrainee_Trainees" FromRole="Trainee" ToRole="UserTrainee" />
+          <NavigationProperty Name="TraineeBookings" Relationship="Repository.FK_TraineeBooking_Trainees" FromRole="Trainee" ToRole="TraineeBooking" />
+        </EntityType>
+        <EntityContainer Name="TrainingMonitorEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Trainees" EntityType="Self.Trainee" />
+          <EntitySet Name="UserTrainees" EntityType="Repository.UserTrainee" />
+          <AssociationSet Name="FK_UserTrainee_Trainees" Association="Repository.FK_UserTrainee_Trainees">
+            <End Role="Trainee" EntitySet="Trainees" />
+            <End Role="UserTrainee" EntitySet="UserTrainees" />
+          </AssociationSet>
+          <EntitySet Name="AspNetUsers" EntityType="Repository.AspNetUser" />
+          <EntitySet Name="Bookings" EntityType="Repository.Booking" />
+          <EntitySet Name="TraineeBookings" EntityType="Repository.TraineeBooking" />
+          <AssociationSet Name="FK_Bookings_Bookings" Association="Repository.FK_Bookings_Bookings">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Booking" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTrainee_UserTrainee" Association="Repository.FK_UserTrainee_UserTrainee">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="UserTrainee" EntitySet="UserTrainees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraineeBooking_Bookings" Association="Repository.FK_TraineeBooking_Bookings">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="TraineeBooking" EntitySet="TraineeBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraineeBooking_Trainees" Association="Repository.FK_TraineeBooking_Trainees">
+            <End Role="Trainee" EntitySet="Trainees" />
+            <End Role="TraineeBooking" EntitySet="TraineeBookings" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="UserTrainee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="TraineeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Trainee" Relationship="Repository.FK_UserTrainee_Trainees" FromRole="UserTrainee" ToRole="Trainee" />
+          <NavigationProperty Name="AspNetUser" Relationship="Repository.FK_UserTrainee_UserTrainee" FromRole="UserTrainee" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_UserTrainee_Trainees">
+          <End Type="Repository.Trainee" Role="Trainee" Multiplicity="1" />
+          <End Type="Repository.UserTrainee" Role="UserTrainee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTrainee">
+              <PropertyRef Name="TraineeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Bookings" Relationship="Repository.FK_Bookings_Bookings" FromRole="AspNetUser" ToRole="Booking" />
+          <NavigationProperty Name="UserTrainees" Relationship="Repository.FK_UserTrainee_UserTrainee" FromRole="AspNetUser" ToRole="UserTrainee" />
+        </EntityType>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Datetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Court" Type="Byte" />
+          <NavigationProperty Name="AspNetUser" Relationship="Repository.FK_Bookings_Bookings" FromRole="Booking" ToRole="AspNetUser" />
+          <NavigationProperty Name="TraineeBookings" Relationship="Repository.FK_TraineeBooking_Bookings" FromRole="Booking" ToRole="TraineeBooking" />
+          <Property Name="Duration" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TraineeBooking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TraineeId" Type="Int32" Nullable="false" />
+          <Property Name="BookingId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Booking" Relationship="Repository.FK_TraineeBooking_Bookings" FromRole="TraineeBooking" ToRole="Booking" />
+          <NavigationProperty Name="Trainee" Relationship="Repository.FK_TraineeBooking_Trainees" FromRole="TraineeBooking" ToRole="Trainee" />
+        </EntityType>
+        <Association Name="FK_Bookings_Bookings">
+          <End Type="Repository.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="Repository.Booking" Role="Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTrainee_UserTrainee">
+          <End Type="Repository.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="Repository.UserTrainee" Role="UserTrainee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTrainee">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraineeBooking_Bookings">
+          <End Type="Repository.Booking" Role="Booking" Multiplicity="1" />
+          <End Type="Repository.TraineeBooking" Role="TraineeBooking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraineeBooking">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraineeBooking_Trainees">
+          <End Type="Repository.Trainee" Role="Trainee" Multiplicity="1" />
+          <End Type="Repository.TraineeBooking" Role="TraineeBooking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraineeBooking">
+              <PropertyRef Name="TraineeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RepositoryStoreContainer" CdmEntityContainer="TrainingMonitorEntities">
+          <EntitySetMapping Name="Trainees">
+            <EntityTypeMapping TypeName="Repository.Trainee">
+              <MappingFragment StoreEntitySet="Trainees">
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="BeNumber" ColumnName="BeNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTrainees">
+            <EntityTypeMapping TypeName="Repository.UserTrainee">
+              <MappingFragment StoreEntitySet="UserTrainee">
+                <ScalarProperty Name="TraineeId" ColumnName="TraineeId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="Repository.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bookings">
+            <EntityTypeMapping TypeName="Repository.Booking">
+              <MappingFragment StoreEntitySet="Bookings">
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Court" ColumnName="Court" />
+                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TraineeBookings">
+            <EntityTypeMapping TypeName="Repository.TraineeBooking">
+              <MappingFragment StoreEntitySet="TraineeBooking">
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="TraineeId" ColumnName="TraineeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

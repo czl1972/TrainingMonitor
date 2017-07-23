@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="71db55386c7f447ea4f76e0c27a2b5ff" Name="Diagram1">
+        <EntityTypeShape EntityType="Repository.Trainee" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repository.UserTrainee" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="Repository.FK_UserTrainee_Trainees" />
+        <EntityTypeShape EntityType="Repository.AspNetUser" Width="1.5" PointX="3.375" PointY="4" />
+        <EntityTypeShape EntityType="Repository.Booking" Width="1.5" PointX="5.625" PointY="4.75" />
+        <EntityTypeShape EntityType="Repository.TraineeBooking" Width="1.5" PointX="7.875" PointY="2.875" />
+        <AssociationConnector Association="Repository.FK_Bookings_Bookings" />
+        <AssociationConnector Association="Repository.FK_UserTrainee_UserTrainee" />
+        <AssociationConnector Association="Repository.FK_TraineeBooking_Bookings" />
+        <AssociationConnector Association="Repository.FK_TraineeBooking_Trainees" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

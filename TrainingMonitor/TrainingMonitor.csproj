@@ -52,6 +52,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -188,6 +190,12 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="AspNetUser.cs">
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Booking.cs">
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -201,8 +209,34 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\TraineeModel.cs" />
+    <Compile Include="Models\ViewModels\BookingViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\Repository.cs" />
+    <Compile Include="Repository.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Repository.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Repository.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="Trainee.cs">
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TraineeBooking.cs">
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserTrainee.cs">
+      <DependentUpon>Repository.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\bootstrap.min.css" />
@@ -623,7 +657,7 @@
     <Content Include="Content\images\users\avatar-7.jpg" />
     <Content Include="Content\images\users\avatar-8.jpg" />
     <Content Include="Content\images\users\avatar-9.jpg" />
-    <Content Include="Content\images\users\LawrenceChen.jpeg" />
+    <Content Include="Content\images\users\LawrenceChen.jpg" />
     <Content Include="Content\images\users\RyanChen.jpg" />
     <Content Include="Content\js\agent.js" />
     <Content Include="Content\js\bootstrap.js" />
@@ -1378,6 +1412,16 @@
     <Content Include="Content\scss\icons\typicons\typicons.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Repository.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Repository.edmx</DependentUpon>
+      <LastGenOutput>Repository.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Repository.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Repository.edmx</DependentUpon>
+      <LastGenOutput>Repository.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -1564,6 +1608,13 @@
     <Content Include="Content\scss\_widgets.scss" />
     <Content Include="Content\scss\_wysiwig.scss" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <EntityDeploy Include="Repository.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Repository.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Repository.edmx.diagram">
+      <DependentUpon>Repository.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1630,6 +1681,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
